@@ -16,4 +16,14 @@ mod tests {
         assert_eq!(combine_first_and_last_number("1", "5"), 15);
         assert_eq!(combine_first_and_last_number("7", "7"), 77);
     }
+
+    #[test]
+    #[should_panic(
+        expected = "Could not convert result to number: ParseIntError { kind: InvalidDigit }"
+    )]
+    fn combine_first_and_last_number_panic_test() {
+        assert_eq!(combine_first_and_last_number("a", "b"), 12);
+        assert_eq!(combine_first_and_last_number("1", "b"), 12);
+        assert_eq!(combine_first_and_last_number("h", "7"), 12);
+    }
 }
