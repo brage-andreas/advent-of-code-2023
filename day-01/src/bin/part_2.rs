@@ -24,8 +24,7 @@
     What is the sum of all of the calibration values?
 */
 
-mod part_1;
-
+use day_01_lib::combine_first_and_last_number;
 use regex::Regex;
 use std::fs;
 
@@ -76,7 +75,7 @@ fn part_2() -> i32 {
     for line in file.split("\n") {
         let (first_number, last_number) = get_first_and_last_number(line);
 
-        result += part_1::combine_first_and_last_number(&first_number, &last_number);
+        result += combine_first_and_last_number(&first_number, &last_number);
     }
 
     result
