@@ -42,10 +42,10 @@ fn get_first_and_last_number(string: &str) -> (&str, &str) {
     (first_number, second_number)
 }
 
-fn combine_first_and_last_number(first_number: &str, second_number: &str) -> i32 {
+pub fn combine_first_and_last_number(first_number: &str, second_number: &str) -> i32 {
     match format!("{}{}", first_number, second_number).parse::<i32>() {
         Ok(result) => result,
-        Err(_) => panic!("Regex `REGEX` is faulty, as it captured a non-number"),
+        Err(error) => panic!("Could not convert result to number: {:?}", error),
     }
 }
 
