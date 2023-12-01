@@ -26,9 +26,9 @@
 use regex::Regex;
 use std::fs;
 
-const PART_1_INPUT_FILE_PATH: &str = "src/bin/part-1-input.txt";
+const PART_1_INPUT_FILE_PATH: &str = "src/bin/part-1-2-input.txt";
 
-fn combine_first_and_last_number(string: &str) -> i32 {
+fn get_first_and_last_number(string: &str) -> (&str, &str) {
     let first_and_last_number_regex =
         Regex::new(r"^\D*(?<first_number>\d)(?:.*(?<second_number>\d)\D*$)?").unwrap();
 
@@ -39,6 +39,10 @@ fn combine_first_and_last_number(string: &str) -> i32 {
         .get(2)
         .map_or(first_number, |capture| capture.as_str());
 
+    (first_number, second_number)
+}
+
+fn combine_first_and_last_number(first_number: &str, second_number: &str) -> i32 {
     match format!("{}{}", first_number, second_number).parse::<i32>() {
         Ok(result) => result,
         Err(_) => panic!("Regex `REGEX` is faulty, as it captured a non-number"),
@@ -57,26 +61,36 @@ fn part_1() -> i32 {
     let mut result = 0;
 
     for line in file.split("\n") {
-        result += combine_first_and_last_number(&line);
+        let (first_number, last_number) = get_first_and_last_number(line);
+
+        result += combine_first_and_last_number(&first_number, &last_number);
     }
 
     result
 }
 
 fn main() {
-    println!("{}", &part_1());
+    println!("{}", part_1());
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::{combine_first_and_last_number, part_1};
+    use super::*;
+
+    #[test]
+    fn get_first_and_last_number_test() {
+        assert_eq!(get_first_and_last_number("1abc2"), ("1", "2"));
+        assert_eq!(get_first_and_last_number("pqr3stu8vwx"), ("3", "8"));
+        assert_eq!(get_first_and_last_number("a1b2c3d4e5f"), ("1", "5"));
+        assert_eq!(get_first_and_last_number("treb7uchet"), ("7", "7"));
+    }
 
     #[test]
     fn combine_first_and_last_number_test() {
-        assert_eq!(combine_first_and_last_number("1abc2"), 12);
-        assert_eq!(combine_first_and_last_number("pqr3stu8vwx"), 38);
-        assert_eq!(combine_first_and_last_number("a1b2c3d4e5f"), 15);
-        assert_eq!(combine_first_and_last_number("treb7uchet"), 77);
+        assert_eq!(combine_first_and_last_number("1", "2"), 12);
+        assert_eq!(combine_first_and_last_number("3", "8"), 38);
+        assert_eq!(combine_first_and_last_number("1", "5"), 15);
+        assert_eq!(combine_first_and_last_number("7", "7"), 77);
     }
 
     #[test]
