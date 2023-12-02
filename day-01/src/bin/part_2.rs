@@ -24,13 +24,13 @@
     What is the sum of all of the calibration values?
 */
 
+use common::read_from_file;
 use day_01_lib::combine_first_and_last_number;
 use regex::Regex;
-use std::fs;
 
 const PART_2_INPUT_FILE_PATH: &str = "src/part-1-2-input.txt";
 
-fn match_capture<'a>(string: &'a str) -> &'a str {
+fn match_capture(string: & str) -> &str {
     match string {
         "one" => "1",
         "two" => "2",
@@ -62,13 +62,7 @@ fn get_first_and_last_number(string: &str) -> (&str, &str) {
 }
 
 fn part_2() -> i32 {
-    let file = match fs::read_to_string(&PART_2_INPUT_FILE_PATH) {
-        Ok(result) => result,
-        Err(error) => panic!(
-            "Could not read from local file `PART_1_INPUT_FILE_PATH`={}\n  Message: \"{}\"",
-            &PART_2_INPUT_FILE_PATH, error
-        ),
-    };
+    let file = read_from_file(PART_2_INPUT_FILE_PATH);
 
     let mut result = 0;
 

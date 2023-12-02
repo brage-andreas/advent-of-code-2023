@@ -36,7 +36,8 @@
     of the IDs of those games?
 */
 
-use day_02_lib::{parse_game, read_from_file};
+use common::read_from_file;
+use day_02_lib::parse_game;
 
 const PART_1_INPUT_FILE_PATH: &str = "src/part-1-input.txt";
 
