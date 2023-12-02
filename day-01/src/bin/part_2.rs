@@ -28,7 +28,7 @@ use common::read_from_file;
 use day_01_lib::combine_first_and_last_number;
 use regex::Regex;
 
-const PART_2_INPUT_FILE_PATH: &str = "src/part-1-2-input.txt";
+const PART_2_INPUT_FILE_PATH: &str = "day-01/src/part-1-2-input.txt";
 
 fn match_capture(string: & str) -> &str {
     match string {
