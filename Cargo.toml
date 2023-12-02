@@ -1,10 +1,6 @@
-[package]
-name = "advent-of-code-2023"
-version = "0.1.0"
-edition = "2021"
-
-[[bin]]
-name = "test"
-path = "src/bin/part-1.rs"
-
-[dependencies]
+[workspace]
+members = [
+    "common",
+    "day-01",
+    "day-02",
+]
