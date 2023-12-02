@@ -39,7 +39,7 @@
 use common::read_from_file;
 use day_02_lib::parse_game;
 
-const PART_1_INPUT_FILE_PATH: &str = "src/part-1-input.txt";
+const PART_1_INPUT_FILE_PATH: &str = "day-02/src/part-1-2-input.txt";
 
 const MAX_GREEN_CUBES: i32 = 13;
 const MAX_BLUE_CUBES: i32 = 14;
