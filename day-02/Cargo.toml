@@ -16,4 +16,5 @@ name = "part_2"
 path = "src/bin/part_2.rs"
 
 [dependencies]
+common = { path = "../common" }
 regex = "1.10.2"
