@@ -27,7 +27,7 @@ use day_01_lib::combine_first_and_last_number;
 use regex::Regex;
 use std::fs;
 
-const PART_1_INPUT_FILE_PATH: &str = "src/bin/part-1-2-input.txt";
+const PART_1_INPUT_FILE_PATH: &str = "src/part-1-2-input.txt";
 
 fn get_first_and_last_number(string: &str) -> (&str, &str) {
     let first_and_last_number_regex =
