@@ -1,0 +1,16 @@
+[package]
+name = "day-03"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "day_03_lib"
+path = "src/lib.rs"
+
+[[bin]]
+name = "part_1"
+path = "src/bin/part_1.rs"
+
+[dependencies]
+common = { path = "../common" }
+regex = "1.10.2"
