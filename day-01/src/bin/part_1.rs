@@ -23,11 +23,10 @@
     calibration values?
 */
 
-use common::read_from_file;
-use day_01_lib::combine_first_and_last_number;
 use regex::Regex;
 
-const PART_1_INPUT_FILE_PATH: &str = "day-01/src/part-1-2-input.txt";
+use common::read_input;
+use day_01_lib::combine_first_and_last_number;
 
 fn get_first_and_last_number(string: &str) -> (&str, &str) {
     let first_and_last_number_regex =
@@ -44,7 +43,7 @@ fn get_first_and_last_number(string: &str) -> (&str, &str) {
 }
 
 fn part_1() -> i32 {
-    let file = read_from_file(PART_1_INPUT_FILE_PATH);
+    let file = read_input(1);
 
     let mut result = 0;
 

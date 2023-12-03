@@ -24,13 +24,12 @@
     What is the sum of all of the calibration values?
 */
 
-use common::read_from_file;
-use day_01_lib::combine_first_and_last_number;
 use regex::Regex;
 
-const PART_2_INPUT_FILE_PATH: &str = "day-01/src/part-1-2-input.txt";
+use common::read_input;
+use day_01_lib::combine_first_and_last_number;
 
-fn match_capture(string: & str) -> &str {
+fn match_capture(string: &str) -> &str {
     match string {
         "one" => "1",
         "two" => "2",
@@ -51,18 +50,18 @@ fn get_first_and_last_number(string: &str) -> (&str, &str) {
     let captures = first_and_last_number_regex.captures(string).unwrap();
 
     let first_number = captures
-        .get(1)
+        .name("first_number")
         .map_or("0", |capture| match_capture(capture.as_str()));
 
     let second_number = captures
-        .get(2)
+        .name("second_number")
         .map_or(first_number, |capture| match_capture(capture.as_str()));
 
     (first_number, second_number)
 }
 
 fn part_2() -> i32 {
-    let file = read_from_file(PART_2_INPUT_FILE_PATH);
+    let file = read_input(1);
 
     let mut result = 0;
 

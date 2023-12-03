@@ -36,17 +36,15 @@
     of the IDs of those games?
 */
 
-use common::read_from_file;
+use common::read_input;
 use day_02_lib::parse_game;
-
-const PART_1_INPUT_FILE_PATH: &str = "day-02/src/part-1-2-input.txt";
 
 const MAX_GREEN_CUBES: i32 = 13;
 const MAX_BLUE_CUBES: i32 = 14;
 const MAX_RED_CUBES: i32 = 12;
 
 fn part_1() -> i32 {
-    let file = read_from_file(PART_1_INPUT_FILE_PATH);
+    let file = read_input(2);
 
     let mut sum: i32 = 0;
 

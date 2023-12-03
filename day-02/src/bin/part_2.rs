@@ -33,13 +33,11 @@
     What is the sum of the power of these sets?
 */
 
-use common::read_from_file;
+use common::read_input;
 use day_02_lib::parse_game;
 
-const PART_2_INPUT_FILE_PATH: &str = "day-02/src/part-1-2-input.txt";
-
 fn part_2() -> i32 {
-    let file = read_from_file(PART_2_INPUT_FILE_PATH);
+    let file = read_input(2);
 
     let mut sum: i32 = 0;
 
