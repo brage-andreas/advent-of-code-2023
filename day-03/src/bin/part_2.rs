@@ -2,7 +2,7 @@
     +---------------------+
     | Advent of Code 2023 |
     +---------------------+
-    >> Day 02, part 2
+    >> Day 03, part 2
 
     The missing part wasn't the only issue - one of the gears in the engine is
     wrong. A gear is any * symbol that is adjacent to exactly two part numbers.

@@ -2,7 +2,7 @@
     +---------------------+
     | Advent of Code 2023 |
     +---------------------+
-    >> Day 02, part 1
+    >> Day 03, part 1
 
     The engine schematic (your puzzle input) consists of a visual
     representation of the engine. There are lots of numbers and symbols you
@@ -57,7 +57,7 @@ fn is_number_adjacent_to_symbol(
             let index_end = usize::min(number_match.end() + 1, line_length);
 
             let string_slice: String = line_chars[index_start..index_end].iter().collect();
-            
+
             if symbol_regex.is_match(&string_slice) {
                 return true;
             }
