@@ -34,48 +34,49 @@ use regex::Regex;
 
 use common::read_input;
 
-// could be improved by merging overlapping ranges
-// could be improved by bucketing searches for each row; so instead of
-// searching each row up to three times, you search them once
-// could also be improved by ignoring the hit itself
+// logic could be improved by
+//   - merging overlapping ranges
+//   - bucketing searches for each row; so instead of searching each row up to
+//     three times, you search them once
+//   - ignoring the hit itself
+
+fn is_number_adjacent_to_symbol(
+    lines: &[&str],
+    line_index: usize,
+    number_match: &regex::Match,
+    symbol_regex: &Regex,
+) -> bool {
+    let range = line_index.saturating_sub(1)..usize::min(line_index + 2, lines.len());
+
+    for test_line_index in range {
+        if let Some(test_line) = lines.get(test_line_index) {
+            let line_chars: Vec<char> = test_line.chars().collect();
+            let line_length = line_chars.len();
+
+            let index_start = usize::min(number_match.start().saturating_sub(1), line_length);
+            let index_end = usize::min(number_match.end() + 1, line_length);
+
+            let string_slice: String = line_chars[index_start..index_end].iter().collect();
+            
+            if symbol_regex.is_match(&string_slice) {
+                return true;
+            }
+        }
+    }
+
+    false
+}
+
 fn part_1(number_regex: &Regex, symbol_regex: &Regex) -> u32 {
     let file = read_input(3);
-    let lines: Vec<&str> = file.split("\n").collect();
+    let lines: Vec<&str> = file.split('\n').collect();
 
     let mut sum = 0;
 
-    for (line, line_content) in lines.iter().enumerate() {
-        for line_match in number_regex.find_iter(line_content) {
-            let lines_to_test_range_start = line.saturating_sub(1);
-            let lines_to_test_range_end = usize::min(line + 1, lines.len() - 1);
-            let lines_to_test_range = lines_to_test_range_start..=lines_to_test_range_end;
-
-            let mut hit = false;
-
-            for line_to_test in lines_to_test_range.filter_map(|i| lines.get(i)) {
-                let line_length_minus_one = line_to_test
-                    .chars()
-                    .collect::<Vec<char>>()
-                    .len()
-                    .saturating_sub(1);
-
-                if line_length_minus_one == 0 {
-                    continue;
-                }
-
-                let index_start = usize::min(line_match.start().saturating_sub(1), line_length_minus_one);
-                let index_end = usize::min(line_match.end() + 1, line_length_minus_one);
-
-                let string_slice = &line_to_test[index_start..index_end];
-
-                if symbol_regex.is_match(string_slice) {
-                    hit = true;
-                    break;
-                }
-            }
-
-            if hit {
-                sum += line_match.as_str().parse::<u32>().unwrap_or(0);
+    for (line_index, line_content) in lines.iter().enumerate() {
+        for number_match in number_regex.find_iter(line_content) {
+            if is_number_adjacent_to_symbol(&lines, line_index, &number_match, symbol_regex) {
+                sum += number_match.as_str().parse::<u32>().unwrap_or(0);
             }
         }
     }
@@ -84,7 +85,7 @@ fn part_1(number_regex: &Regex, symbol_regex: &Regex) -> u32 {
 }
 
 fn main() {
-    let number_regex = Regex::new(r"(?<number>\d+)").unwrap();
+    let number_regex = Regex::new(r"\d+").unwrap();
     let symbol_regex = Regex::new(r"[^0-9.\s]").unwrap();
 
     println!("{}", part_1(&number_regex, &symbol_regex));
@@ -94,13 +95,49 @@ fn main() {
 mod tests {
     use regex::Regex;
 
-    use crate::part_1;
+    use crate::{is_number_adjacent_to_symbol, part_1};
+
+    #[test]
+    fn is_number_adjacent_to_symbol_test() {
+        let number_regex = Regex::new(r"\d+").unwrap();
+        let symbol_regex = Regex::new(r"[^0-9.\s]").unwrap();
+
+        let lines = [
+            "467..114..",
+            "...*......",
+            "..35..633.",
+            "......#...",
+            "617*......",
+            ".....+.58.",
+            "..592.....",
+            "......755.",
+            "...$.*....",
+            ".664.598..",
+        ];
+
+        let result_a = is_number_adjacent_to_symbol(
+            &lines,
+            0,
+            &number_regex.find("467").unwrap(),
+            &symbol_regex,
+        );
+
+        let result_b = is_number_adjacent_to_symbol(
+            &lines,
+            0,
+            &number_regex.find(".....114").unwrap(),
+            &symbol_regex,
+        );
+
+        assert_eq!(result_a, true);
+        assert_eq!(result_b, false);
+    }
 
     #[test]
     fn part_1_test() {
-        let number_regex = Regex::new(r"(?<number>\d+)").unwrap();
+        let number_regex = Regex::new(r"\d+").unwrap();
         let symbol_regex = Regex::new(r"[^0-9.\s]").unwrap();
 
-        assert_eq!(part_1(&number_regex, &symbol_regex), 546563)
+        assert_eq!(part_1(&number_regex, &symbol_regex), 546563); // Update with correct expected value
     }
 }
