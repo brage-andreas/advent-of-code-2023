@@ -138,6 +138,6 @@ mod tests {
         let number_regex = Regex::new(r"\d+").unwrap();
         let symbol_regex = Regex::new(r"[^0-9.\s]").unwrap();
 
-        assert_eq!(part_1(&number_regex, &symbol_regex), 546563); // Update with correct expected value
+        assert_eq!(part_1(&number_regex, &symbol_regex), 546563);
     }
 }
